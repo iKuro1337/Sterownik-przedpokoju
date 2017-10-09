@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oswietlenie automatyczne w przedpokoju</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type = "text/javascript" src = "/light.js"></script>
+
+<style type="text/css">
+  #tabs {
+    margin: auto;
+  }
+  #clock{
+    margin: auto;
+  }
+</style>
+
+<style>
+  #RGB-container {
+    margin: 15px;
+    position: relative;
+    width: 100%;
+    overflow: hidden; /*To get your parent to respect the floated divs*/
+  }
+  #red, #green, #blue {
+    position: relative;
+    float: left;
+    clear: left;
+    width: 80%;
+    margin: 15px;
+  }
+  #swatch {
+    position: relative;
+    width: 120px;
+    height: 100px;
+    margin-top: 18px;
+    margin-left:85%;
+    background-image: none;
+  }
+  #red .ui-slider-range { background: #ef2929; }
+  #red .ui-slider-handle {width: 3em; text-align: center; border-color: #ef2929; }
+  #green .ui-slider-range { background: #8ae234; }
+  #green .ui-slider-handle {width: 3em; text-align: center; border-color: #8ae234; }
+  #blue .ui-slider-range { background: #729fcf; }
+  #blue .ui-slider-handle {width: 3em; text-align: center; border-color: #729fcf; }
+  </style>
+
+<style>
+  #custom-handle {
+    width: 3em;
+    height: 1.6em;
+    top: 50%;
+    margin-top: -.8em;
+    text-align: center;
+    line-height: 1.6em;
+  }
+</style>
+
+<style>
+  #slider {
+    float: left;
+    clear: center;
+    width: 95%;
+    margin: 15px;
+  }
+</style>
+
+<style>
+  #progressbar-container {
+    margin: 15px;
+    position: relative;
+    width: 100%;
+    overflow: hidden; /*To get your parent to respect the floated divs*/
+}
+  #progressbar-value {
+    position: relative;
+    width: 5%; /*Because you only have 3 elements (100 divided by 3)*/
+    height: 15px;
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #progressbar {
+    position: relative;
+    width: 90%; /*Because you only have 3 elements (100 divided by 3)*/
+    height: 15px;
+    float: left; /*To get them next to each other if all else fails*/
+  }
+</style>
+
+<style>
+
+  #submit {
+    width: 200px;
+    height: 20px;
+    float: left; /*To get them next to each other if all else fails*/
+    border-style: groove;
+    background-color:Gainsboro;
+    cursor: pointer;
+  }
+  #submit:active {
+    width: 200px;
+    height: 20px;
+    float: left; /*To get them next to each other if all else fails*/
+    border-style: groove;
+    border-color:white;
+    cursor: pointer;
+    background-color:white;
+  }
+
+</style>
+
+<style>
+  #ESPDATA {
+    margin: 15px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /*To get your parent to respect the floated divs*/
+}
+  #chip_data {
+    background-color: WhiteSmoke;
+    margin: 15px;
+    position: relative;
+    width: 42%; /*Because you only have 3 elements (100 divided by 3)*/
+    height: 150px;
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #flash_data {
+    position: relative;
+    margin: 15px;
+    background-color: WhiteSmoke;
+    width: 42%; /*Because you only have 3 elements (100 divided by 3)*/
+    height: 150px;
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #bootandsketch {
+    position: relative;
+    margin: 15px;
+    background-color: WhiteSmoke;
+    width: 42%; /*Because you only have 3 elements (100 divided by 3)*/
+    height: 150px;
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #sensor_IO {
+    position: relative;
+    margin: 15px;
+    background-color: WhiteSmoke;
+    width: 42%; /*Because you only have 3 elements (100 divided by 3)*/
+    height: 150px;
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #RGB_CONTROL{
+    background-color: WhiteSmoke;
+    margin: 15px;
+    position: relative;
+    width: 98%; /*Because you only have 3 elements (100 divided by 3)*/
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #LUX_CONTROL{
+    background-color: WhiteSmoke;
+    margin: 15px;
+    position: relative;
+    width: 98%; /*Because you only have 3 elements (100 divided by 3)*/
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #SAVE_SETTINGS{
+    background-color: WhiteSmoke;
+    margin: 15px;
+    position: relative;
+    width: 97%; /*Because you only have 3 elements (100 divided by 3)*/
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #header-text {
+    margin: 5px;
+    color: black;
+    font-weight: bold;
+  }
+  #left{
+    position: relative;
+    width: 50%; /*Because you only have 3 elements (100 divided by 3)*/
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #right{
+    position: relative;
+    width: 25%; /*Because you only have 3 elements (100 divided by 3)*/
+    float: right; /*To get them next to each other if all else fails*/
+  }
+  #timedata{
+    background-color: WhiteSmoke;
+    margin: 15px;
+    position: relative;
+    width: 98%; /*Because you only have 3 elements (100 divided by 3)*/
+    float: left; /*To get them next to each other if all else fails*/
+  }
+  #time_fields {
+    background-color: White;
+    margin: 15px;
+    position: relative;
+    width: 42%; /*Because you only have 3 elements (100 divided by 3)*/
+    min-height: 30px;
+    float: left; /*To get them next to each other if all else fails*/
+  }
+</style>
+
+<style>
+  a:hover{
+    color:Gainsboro;
+  }
+
+</style>
+
+<style>
+  .TIMESET{
+    width: 35px;
+}
+  .TIMEZONE{
+    width: 40px;
+}
+  #TIMESET{
+    margin: 5px;
+  }
+  #TIMEZONE{
+    margin: 5px;
+  }
+  .TDELSET{
+    width: 50px;
+}
+</style>
+
+</head>
+<body>
+  <div id = "tabs" style="float:middle">
+	  <ul>
+      <li><a href = "#tabs-1">Informacje ogólne</a></li>
+      <li><a href = "#tabs-2">Sterowanie Światlem</a></li>
+      <li><a href = "#tabs-3"><div id="clock">zegar</div></a></li>
+    </ul>
+		<div id = "tabs-1">
+      <div id="ESPDATA">
+          <div id="chip_data">
+            <div id="header-text">Chip Data</div>
+            <div id="chid">a</div>
+            <div id="cpufreq">z</div>
+            <div id="freeheap">b</div>
+            <div id="cycletime">c</div>
+          </div>
+          <div id="flash_data">
+            <div id="header-text">Flash Data</div>
+            <div id="flashchid">d</div>
+            <div id="flashchrealsize">e</div>
+            <div id="flashchsize">f</div>
+            <div id="flashchspeed">g</div>
+            <div id="flashchmode">h</div>
+            <div id="flashchsizebyid">i</div>
+          </div>
+          <div id="bootandsketch">
+            <div id="header-text">General Info</div>
+            <div id="bootmode">j</div>
+            <div id="sketchsize">k</div>
+            <div id="freesketchspace">l</div>
+            <div id="IP">m</div>
+          </div>
+          <div id="sensor_IO">
+            <div id="header-text">Sensor Info</div>
+            <div id="pir">n</div>
+            <div id="lux">o</div>
+            <div id="cztem">p</div>
+            <div id="czhum">r</div>
+          </div>
+      </div>
+    </div>
+
+		<div id = "tabs-2">
+		  <div id="RGB_CONTROL">
+        <div id="header-text"><a>Wybierz barwe RGB</a></div>
+        <div id="time_fields">
+          <button id="LEDON" class="ui-button ui-widget ui-corner-all">Zalacz LEDRGB</button>
+          <button id="LEDOFF" class="ui-button ui-widget ui-corner-all">Wylacz LEDRGB</button>
+          <button id="RAINBOW" class="ui-button ui-widget ui-corner-all">Wlacz tecze!</button>
+        </div>
+
+        <div id="RGB-container">
+          <div id="red">
+            <div id="valueslide_red" class="ui-slider-handle"></div>
+          </div>
+          <div id="green">
+            <div id="valueslide_green" class="ui-slider-handle"></div>
+          </div>
+          <div id="blue">
+            <div id="valueslide_blue" class="ui-slider-handle"></div>
+          </div>
+
+          <div id="swatch" class="ui-widget-content ui-corner-all"></div>
+        </div>
+      </div>
+
+      <div id="LUX_CONTROL">
+        <div id="header-text" class="moc-container"><a>Docelowa jasnosc</a></div>
+        <div id="slider">
+          <div id="custom-handle" class="ui-slider-handle"></div>
+        </div>
+
+        <div id="header-text"><a>Jasnosc</a></div>
+        <div id="progressbar-container">
+          <div id="progressbar-value"></div>
+          <div id="progressbar"></div>
+        </div>
+      </div>
+
+      <div id="SAVE_SETTINGS">
+        <div>
+         <button id="SAVE_SETTINGS" class="ui-button ui-widget ui-corner-all">Zapisz ustawienia do pamieci</button>
+        </div>
+      </div>
+
+      <div id="dialog" title="Wybierz docelowa jasnosc">
+        <label for="number"><a>Jasnosc</a></label>
+        <form>
+          <input id="LUX_VAL" type="number" value="123">
+        </form>
+      </div>
+    </div>
+		<div id = "tabs-3">
+      <div id="timedata">
+        <div id="header-text"><a>Synchronizacja: </a></div>
+        <div id="time_fields">
+        <button id="SYNC" class="ui-button ui-widget ui-corner-all">Synchronizuj czas z NTP</button>
+        </div>
+      </div>
+      <div id="timedata">
+        <div id="header-text"><a>Czas:</a></div>
+        <div id="time_fields">
+        <div id="CURR_TIME"></div>
+        <button id="T_SET" class="ui-button ui-widget ui-corner-all">Ustaw zegar</button>
+        </div>
+      </div>
+
+      <div id="dialog_czas" title="Wprowadz aktualny czas">
+        <div id="header-text"><a>Czas:</a></div>
+        <form>
+          <div id="TIMESET"><a>Ustaw godzine</a>
+            <input id="T_HOUR_VAL" class="TIMESET" type="number" value="01" max="23" min="0">:
+            <input id="T_MIN_VAL" class="TIMESET" type="number" value="02" max="59" min="0">:
+            <input id="T_SEC_VAL" class="TIMESET" type="number" value="03" max="59" min="0">
+          </div>
+          <div id="TIMEZONE"><a>Strefa czasowa:</a>
+            <input id="T_TIMEZONE_VAL" class="TIMEZONE" type="number" value="4" max="14" min="-10">
+          </div>
+        </form>
+      </div>
+
+      <div id="timedata">
+        <div id="header-text"><a>Godziny swiecenia</a></div>
+        <div id="time_fields">
+          <div id="header-text"><a>Biale swiatlo</a></div>
+          <form>
+              <div>od:
+              <input id="W_START_HOUR_VAL" class="TIMESET" type="number" value="01" max="23" min="0">:
+              <input id="W_START_MIN_VAL" class="TIMESET" type="number" value="02" max="59" min="0">
+              do:
+              <input id="W_STOP_HOUR_VAL" class="TIMESET" type="number" value="01" max="23" min="0">:
+              <input id="W_STOP_MIN_VAL" class="TIMESET" type="number" value="02" max="59" min="0">
+              </div>
+          </form>
+        </div>
+        <div id="time_fields">
+          <div id="header-text"><a>RGB</a></div>
+          <form>
+              <div>od:
+              <input id="RGB_START_HOUR_VAL" class="TIMESET" type="number" value="01" max="23" min="0">:
+              <input id="RGB_START_MIN_VAL" class="TIMESET" type="number" value="02" max="59" min="0">
+              do:
+              <input id="RGB_STOP_HOUR_VAL" class="TIMESET" type="number" value="01" max="23" min="0">:
+              <input id="RGB_STOP_MIN_VAL" class="TIMESET" type="number" value="02" max="59" min="0">
+              </div>
+          </form>
+        </div>
+        <div id="time_fields">
+          <button id="SAVE_TIMES" class="ui-button ui-widget ui-corner-all">Zapisz parametry</button>
+          <button id="DOWNLOAD_TIMES" class="ui-button ui-widget ui-corner-all">Pobierz parametry</button>
+        </div>
+      </div>
+
+      <div id="timedata">
+        <div id="header-text"><a>Opoznienie automatycznego gaszenia</a></div>
+        <div id="time_fields">
+          <form>
+            <input id="TDEL_AUTOOFF" class="TDELSET" type="number" value="01" max="300" min="0">s
+          </form>
+        </div>
+        <div id="time_fields">
+        </div>
+        <div id="time_fields">
+          <button id="SAVE_TDEL_AUTOOFF" class="ui-button ui-widget ui-corner-all">Zapisz czas</button>
+          <button id="DOWNLOAD_TDEL_AUTOOFF" class="ui-button ui-widget ui-corner-all">Pobierz czas</button>
+        </div>
+      </div>
+
+   </div>
+  </div>
+</body>
+</html>
